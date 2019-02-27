@@ -1,15 +1,17 @@
 import React from 'react';
 
-import Header from './Header'
-import Action from './Action'
-import Options from './Options'
-import AddOption from './AddOption'
+import Header from './Header';
+import Action from './Action';
+import Options from './Options';
+import AddOption from './AddOption';
+import OptionsModal from './OptionsModal';
 
 export default class IndecisionApp extends React.Component {
 	state = {
 		appTitle: 'Indecision App',
 		appSubtitle: 'Put your life in the hands of a computer!',
 		options: this.props.options,
+		selectedOption: undefined
 	};
 
 	addOption = item => {
@@ -27,9 +29,9 @@ export default class IndecisionApp extends React.Component {
 		}));
 	};
 	
-	pickRand = () => {
+	selectOption = () => {
 		const r = Math.floor(Math.random() * this.state.options.length);
-		alert (this.state.options [r]);
+		this.setState({selectedOption: this.state.options [r]});
 	}
 
 	removeAll = () => {
@@ -38,10 +40,12 @@ export default class IndecisionApp extends React.Component {
 		}));
 	};
 
+	handleCloseModal = () => this.setState({ selectedOption: undefined });
+
 	componentDidMount = () => {
 		try {
 			let options = JSON.parse (localStorage.getItem('options'));
-			if (options) this.setState (() => ({ options }))  
+			if (options.length) this.setState (() => ({ options }))  
 		} catch (e) {}
 	};
 
@@ -54,9 +58,10 @@ export default class IndecisionApp extends React.Component {
 		return (
 			<div>
 				<Header title={this.state.appTitle} subtitle={this.state.appSubtitle}/>
-				<Action opt={this.state.options} rmvAll={this.removeAll} handlePick={this.pickRand}/>
+				<Action opt={this.state.options} rmvAll={this.removeAll} handlePick={this.selectOption}/>
 				<Options opt={this.state.options} rmvOpt={this.removeOption}/>
 				<AddOption addOpt={this.addOption}/>
+				<OptionsModal selectedOption={this.state.selectedOption} closeModal={this.handleCloseModal}/>
 			</div>
 		);
 	};
