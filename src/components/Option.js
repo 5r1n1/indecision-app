@@ -1,9 +1,9 @@
 import React from 'react';
 
 const Option = props => 
-<li>
-  {props.item}
-  <button 
+<li className="option">
+  <p className="option__text">{props.keyValue+1}.{props.item}</p>
+  <button className="button button--link"
     onClick={(e => props.rmvOption(props.keyValue))}
     >Remove
   </button>

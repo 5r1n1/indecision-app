@@ -57,11 +57,15 @@ export default class IndecisionApp extends React.Component {
 	render () {
 		return (
 			<div>
-				<Header title={this.state.appTitle} subtitle={this.state.appSubtitle}/>
-				<Action opt={this.state.options} rmvAll={this.removeAll} handlePick={this.selectOption}/>
-				<Options opt={this.state.options} rmvOpt={this.removeOption}/>
-				<AddOption addOpt={this.addOption}/>
-				<OptionsModal selectedOption={this.state.selectedOption} closeModal={this.handleCloseModal}/>
+				<div className="container">
+					<Header title={this.state.appTitle} subtitle={this.state.appSubtitle}/>
+					<Action opt={this.state.options} handlePick={this.selectOption}/>
+					<div className="widget">
+						<Options opt={this.state.options} rmvOpt={this.removeOption} rmvAll={this.removeAll}/>
+						<AddOption addOpt={this.addOption}/>
+					</div>
+				</div>
+			<OptionsModal selectedOption={this.state.selectedOption} closeModal={this.handleCloseModal}/>
 			</div>
 		);
 	};
